@@ -1,13 +1,14 @@
 #include <string>
 #include <iostream>
 
-class cat
+struct cat
 {
-public:
-    cat(const char *name);
-    const char *name() const;
-    void meow();
-
-private:
     const char *name_;
 };
+
+extern "C"
+{
+    cat make_cat(const char *name);
+    const char *cat_name(const cat *c);
+    void cat_meow(cat *c);
+}

@@ -1,6 +1,16 @@
 #include "cats.hpp"
 
-cat::cat(const char *name) : name_(name) {}
+cat make_cat(const char *name)
+{
+    return {name};
+}
 
-const char *cat::name() const { return name_; }
-void cat::meow() { std::cout << "meow\n"; }
+const char *cat_name(const cat *c)
+{
+    return c->name_;
+}
+
+void cat_meow(cat *c)
+{
+    std::cout << "meow\n";
+}
