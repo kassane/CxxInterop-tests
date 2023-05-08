@@ -88,12 +88,12 @@ fn meow() {  // <- zero-sized return type is implied
 
 ```rust
 impl Cat {
-    fn name(&self) -> &str {
+    fn name(&self) -> &str {  // <- shared access
         &self.name // <- expression-oriented return, like e.g. Ruby
     }
 
-    fn set_name(&mut self, name: String) {
-        self.name = name;
+    fn set_name(&mut self, name: String) { // <- unique access
+        self.name = name; // <- mutating a value!
     }
 }
 ```
