@@ -38,9 +38,10 @@ fn main() {
     // Builds the project in the directory located in `../cpp`, installing it
     // into $OUT_DIR
     let dst = cmake::Config::new("../cpp")
-        .generator("Visual Studio 17 2022")
+        // .generator("Visual Studio 17 2022")
         .build();
 
     println!("cargo:rustc-link-search=native={}", dst.display());
     println!("cargo:rustc-link-lib=static=cats");
+    println!("cargo:rustc-link-lib=dylib=c++");
 }
