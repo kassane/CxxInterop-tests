@@ -13,20 +13,6 @@ extern "C" {
     pub fn cat_meow(this: *mut cat);
 }
 
-impl cat {
-    pub unsafe fn new(name: *const c_char) -> Self {
-        make_cat(name)
-    }
-
-    pub fn meow(&mut self) {
-        unsafe { cat_meow(self) };
-    }
-
-    pub fn name(&self) {
-        unsafe { cat_name(self) };
-    }
-}
-
 fn main() {
     let marshmallow_name = CString::new("Marshmallow").unwrap();
 
