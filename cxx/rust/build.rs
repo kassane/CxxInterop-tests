@@ -1,5 +1,6 @@
 fn main() {
     cxx_build::bridge("src/main.rs")
+        .flag_if_supported("-std=c++11")
         .file("src/cats.cpp")
         .compile("cats");
 
