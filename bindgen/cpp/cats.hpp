@@ -1,13 +1,13 @@
 #include <string>
 #include <iostream>
 
-class cat {
+class cat
+{
 public:
-    cat(const char* name);
-    
-    const char* name() const;
+    cat(const char *name);
+    const char *name() const;
     void meow();
 
 private:
-    const char* name_;
+    const char *name_;
 };
