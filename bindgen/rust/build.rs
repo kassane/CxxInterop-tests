@@ -7,6 +7,7 @@ use std::path::PathBuf;
 fn main() {
     // Tell cargo to invalidate the built crate whenever the header changes
     println!("cargo:rerun-if-changed=../cpp/cats.hpp");
+    println!("cargo:rerun-if-changed=../cpp/cats.cpp");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
@@ -39,6 +40,7 @@ fn main() {
     // into $OUT_DIR
     let dst = cmake::Config::new("../cpp")
         // .generator("Visual Studio 17 2022")
+        .cxxflag("-std=c++20")
         .build();
 
     println!("cargo:rustc-link-search=native={}", dst.display());

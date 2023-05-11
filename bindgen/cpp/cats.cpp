@@ -1,6 +1,22 @@
 #include "cats.hpp"
 
-cat::cat(const char *name) : name_(name) {}
+cat::cat(const char *name) : name_(name), is_hungry(true) {}
 
 const char *cat::name() const { return name_; }
-void cat::meow() { std::cout << "meow\n"; }
+
+void cat::feed()
+{
+    is_hungry = false;
+}
+
+void cat::meow() const
+{
+    if (is_hungry)
+    {
+        std::cout << name_ << " is hungry\n";
+    }
+    else
+    {
+        std::cout << name_ << " is sleepy\n";
+    }
+}

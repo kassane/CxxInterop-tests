@@ -9,7 +9,7 @@ fn main() {
     // into $OUT_DIR
     let dst = cmake::Config::new("../cpp")
         // .generator("Visual Studio 17 2022")
-        .cxxflag("-std=c++11")
+        .cxxflag("-std=c++20")
         .build();
 
     println!("cargo:rustc-link-search=native={}", dst.display());
