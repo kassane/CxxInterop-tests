@@ -12,7 +12,7 @@ mod ffi {
     }
 
     unsafe extern "C++" {
-        include!("cats/../cpp/cats.hpp");
+        include!("cats_cxx/../cpp/cats.hpp");
         fn test();
     }
 }
