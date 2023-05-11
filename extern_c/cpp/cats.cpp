@@ -2,7 +2,8 @@
 
 cat make_cat(const char *name)
 {
-    return {name};
+    cat c{name, true};
+    return c;
 }
 
 const char *cat_name(const cat *c)
@@ -10,7 +11,19 @@ const char *cat_name(const cat *c)
     return c->name_;
 }
 
-void cat_meow(cat *c)
+void cat_feed(cat *c)
 {
-    std::cout << "meow\n";
+    c->is_hungry = false;
+}
+
+void cat_meow(const cat *c)
+{
+    if (c->is_hungry)
+    {
+        std::cout << c->name_ << " is hungry\n";
+    }
+    else
+    {
+        std::cout << c->name_ << " is sleepy\n";
+    }
 }
