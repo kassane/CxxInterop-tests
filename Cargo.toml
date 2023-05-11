@@ -1,6 +1,0 @@
-[workspace]
-members = [
-    "extern_c/rust",
-    "cxx/rust",
-    "bindgen/rust",
-]
