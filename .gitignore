@@ -3,3 +3,4 @@ bindgen/rust/target
 cxx/rust/target
 extern_c/rust/target
 target/
+.DS_Store
