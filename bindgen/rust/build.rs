@@ -1,14 +1,13 @@
 extern crate bindgen;
 
+use cmake;
 use std::env;
 use std::path::PathBuf;
-use cmake;
-
-
 
 fn main() {
     // Tell cargo to invalidate the built crate whenever the header changes
     println!("cargo:rerun-if-changed=../cpp/cats.hpp");
+    println!("cargo:rerun-if-changed=../cpp/cats.cpp");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
@@ -17,9 +16,9 @@ fn main() {
         .clang_arg("-std=c++20")
         .clang_arg("-x")
         .clang_arg("c++")
-		.allowlist_type("cat")
+        .allowlist_type("cat")
         .generate_inline_functions(true)
-		.opaque_type("std::.*")
+        .opaque_type("std::.*")
         // The input header we would like to generate
         // bindings for.
         .header("../cpp/cats.hpp")
@@ -39,11 +38,12 @@ fn main() {
 
     // Builds the project in the directory located in `../cpp`, installing it
     // into $OUT_DIR
-    let dst = cmake::Config::
-            new("../cpp")
-            .generator("Visual Studio 17 2022")
-            .build();
+    let dst = cmake::Config::new("../cpp")
+        // .generator("Visual Studio 17 2022")
+        .cxxflag("-std=c++20")
+        .build();
 
     println!("cargo:rustc-link-search=native={}", dst.display());
     println!("cargo:rustc-link-lib=static=cats");
+    println!("cargo:rustc-link-lib=dylib=c++");
 }
