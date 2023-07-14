@@ -1,20 +1,42 @@
+const builtin = @import("builtin");
+
 pub const cat = extern struct {
     name_: [*:0]const u8,
     is_hungry: bool,
 
-    extern fn @"_ZN3catC1EPKc"(self: ?*cat, name: [*:0]const u8) void;
+    const ctor = @extern(*const fn (self: ?*cat, name: [*:0]const u8) callconv(.C) void, .{
+        .name = switch (builtin.target.abi) {
+            .msvc => "??0cat@@QEAA@PEBD@Z",
+            else => "_ZN3catC1EPKc",
+        },
+    });
     pub inline fn init(selfname: [*:0]const u8) cat {
         var self: cat = undefined;
-        @"_ZN3catC1EPKc"(&self, selfname);
+        ctor(&self, selfname);
         return self;
     }
 
-    extern fn @"_ZNK3cat4nameEv"(self: ?*const cat) [*:0]const u8;
-    pub const name = @"_ZNK3cat4nameEv";
+    const name_m = @extern(*fn (self: ?*const cat) callconv(.C) [*:0]const u8, .{
+        .name = switch (builtin.target.abi) {
+            .msvc => "?name@cat@@QEBAPEBDXZ",
+            else => "_ZNK3cat4nameEv",
+        },
+    });
+    pub const name = name_m;
 
-    extern fn @"_ZN3cat4feedEv"(self: ?*cat) void;
-    pub const feed = @"_ZN3cat4feedEv";
+    const feed_m = @extern(*fn (self: ?*cat) callconv(.C) void, .{
+        .name = switch (builtin.target.abi) {
+            .msvc => "?feed@cat@@QEAAXXZ",
+            else => "_ZN3cat4feedEv",
+        },
+    });
+    pub const feed = feed_m;
 
-    extern fn @"_ZNK3cat4meowEv"(self: ?*const cat) void;
-    pub const meow = @"_ZNK3cat4meowEv";
+    const meow_m = @extern(*const fn (self: ?*const cat) callconv(.C) void, .{
+        .name = switch (builtin.target.abi) {
+            .msvc => "?meow@cat@@QEBAXXZ",
+            else => "_ZNK3cat4meowEv",
+        },
+    });
+    pub const meow = meow_m;
 };

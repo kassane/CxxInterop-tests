@@ -1,8 +1,13 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+    var target = b.standardTargetOptions(.{});
+
+    // for Windows overwritten default abi (mingw to msvc)
+    if (target.isWindows()) {
+        target.abi = .msvc;
+    }
 
     buildExe(b, .{
         .path = "extern_c/zig/extern_c.main.zig",
@@ -47,7 +52,13 @@ fn buildExe(b: *std.Build, properties: BuildInfo) void {
     //     });
     //     // exe.step.dependOn(&cxxBridge(b).step);
     // }
-    exe.linkLibCpp(); //static-libcxx
+
+    // nostdlib++: zig to msvc target don't has libc++ support yet.
+    if (properties.target.getAbi() == .msvc) {
+        // need winsdk and crt installed, run cmd: zig libc (to detect os-libc)
+        exe.linkLibC();
+    } else exe.linkLibCpp(); //static llvm-libcxx
+
     b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);

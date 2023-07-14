@@ -14,12 +14,12 @@ jobs:
       - uses: goto-bus-stop/setup-zig@v2
         with:
           version: master
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+      # - uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: stable
+      #     override: true
 
-      - name: Build & Run
+      - name: Zig - Build & Run
         run: |
             zig build --summary all
             zig build bindgen && zig build extern_c
