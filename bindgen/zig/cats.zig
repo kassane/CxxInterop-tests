@@ -16,7 +16,7 @@ pub const cat = extern struct {
         return self;
     }
 
-    const name_m = @extern(*fn (self: ?*const cat) callconv(.C) [*:0]const u8, .{
+    const name_m = @extern(*const fn (self: ?*const cat) callconv(.C) [*:0]const u8, .{
         .name = switch (builtin.target.abi) {
             .msvc => "?name@cat@@QEBAPEBDXZ",
             else => "_ZNK3cat4nameEv",
@@ -24,7 +24,7 @@ pub const cat = extern struct {
     });
     pub const name = name_m;
 
-    const feed_m = @extern(*fn (self: ?*cat) callconv(.C) void, .{
+    const feed_m = @extern(*const fn (self: ?*cat) callconv(.C) void, .{
         .name = switch (builtin.target.abi) {
             .msvc => "?feed@cat@@QEAAXXZ",
             else => "_ZN3cat4feedEv",

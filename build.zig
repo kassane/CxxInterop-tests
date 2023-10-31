@@ -28,17 +28,24 @@ pub fn build(b: *std.Build) void {
 }
 
 fn buildExe(b: *std.Build, properties: BuildInfo) void {
+    const libcats = b.addStaticLibrary(.{
+        .name = properties.filename(),
+        .target = properties.target,
+        .optimize = properties.optimize,
+    });
+    if (std.mem.eql(u8, properties.filename(), "extern_c")) {
+        libcats.addCSourceFile(.{ .file = .{ .path = "extern_c/cpp/cats.cpp" }, .flags = &.{} });
+    } else if (std.mem.eql(u8, properties.filename(), "bindgen")) {
+        libcats.addCSourceFile(.{ .file = .{ .path = "bindgen/cpp/cats.cpp" }, .flags = &.{} });
+    } else {}
+
     const exe = b.addExecutable(.{
         .name = properties.filename(),
         .root_source_file = FileSource.relative(properties.path),
         .target = properties.target,
         .optimize = properties.optimize,
     });
-    if (std.mem.eql(u8, properties.filename(), "extern_c")) {
-        exe.addCSourceFile("extern_c/cpp/cats.cpp", &.{});
-    } else if (std.mem.eql(u8, properties.filename(), "bindgen")) {
-        exe.addCSourceFile("bindgen/cpp/cats.cpp", &.{});
-    } else {}
+    exe.linkLibrary(libcats);
     //     exe.addIncludePath("cxx/cpp");
     //     exe.addIncludePath("target/cxxbridge/cats_cxx/src");
     //     exe.addIncludePath("target/cxxbridge/rust");
@@ -56,9 +63,14 @@ fn buildExe(b: *std.Build, properties: BuildInfo) void {
     // nostdlib++: zig to msvc target don't has libc++ support yet.
     if (properties.target.getAbi() == .msvc) {
         // need winsdk and crt installed, run cmd: zig libc (to detect os-libc)
-        exe.linkLibC();
-    } else exe.linkLibCpp(); //static llvm-libcxx
+        libcats.linkLibC();
+    } else {
+        libcats.linkLibCpp();
+        //static llvm-libcxx
+    }
+    exe.linkLibC();
 
+    b.installArtifact(libcats);
     b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);

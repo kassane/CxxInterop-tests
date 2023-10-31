@@ -1,0 +1,25 @@
+{
+	"authors": ["Matheus C. França"],
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "bindgen",
+	"targetType": "executable",
+    "targetPath": "bin",
+	"dflags": [
+		"-preview=dip1000"
+	],
+	"buildTypes": {
+        "release": {
+            "buildOptions": ["optimize", "inline"]
+        }
+    },
+	"sourceFiles-linux": [
+		"../../zig-out/lib/libbindgen.a"
+	],
+	"sourceFiles-osx": [
+		"../../zig-out/lib/libbindgen.a"
+	],
+	"sourceFiles-windows": [
+		"../../zig-out/lib/bindgen.lib"
+	]
+}

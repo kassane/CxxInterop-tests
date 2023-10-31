@@ -1,0 +1,25 @@
+{
+	"authors": ["Matheus C. França"],
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "extern_c",
+	"targetType": "executable",
+    "targetPath": "bin",
+	"dflags": [
+		"-preview=dip1000"
+	],
+	"buildTypes": {
+        "release": {
+            "buildOptions": ["optimize", "inline"]
+        }
+    },
+	"sourceFiles-linux": [
+		"../../zig-out/lib/libextern_c.a"
+	],
+	"sourceFiles-osx": [
+		"../../zig-out/lib/libextern_c.a"
+	],
+	"sourceFiles-windows": [
+		"../../zig-out/lib/extern_c.lib"
+	]
+}

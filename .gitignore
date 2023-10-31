@@ -2,7 +2,26 @@
 bindgen/rust/target
 cxx/rust/target
 extern_c/rust/target
+Cargo.lock
 target/
 .DS_Store
 zig-cache/
 zig-out/
+
+# D
+.dub
+docs.json
+__dummy.html
+docs/
+/d
+d.so
+d.dylib
+d.dll
+d.a
+d.lib
+d-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
