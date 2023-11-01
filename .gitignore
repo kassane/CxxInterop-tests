@@ -25,3 +25,8 @@ d-test-*
 *.o
 *.obj
 *.lst
+
+# xmake
+.xmake/
+build/
+*/d/bin/

@@ -1,25 +1,24 @@
 {
-	"authors": ["Matheus C. França"],
-	"description": "A minimal D application.",
-	"license": "proprietary",
-	"name": "bindgen",
+	"description": "C++ FFI mangled",
+	"name": "cats_d",
 	"targetType": "executable",
     "targetPath": "bin",
-	"dflags": [
-		"-preview=dip1000"
-	],
 	"buildTypes": {
         "release": {
-            "buildOptions": ["optimize", "inline"]
+            "buildOptions": ["releaseMode", "optimize", "inline"],
+			"dflags": ["--betterC", "-boundscheck=off"]
+        },
+		"debug": {
+            "buildOptions": ["debugMode", "debugInfo", "optimize"]
         }
     },
-	"sourceFiles-linux": [
-		"../../zig-out/lib/libbindgen.a"
+	"preBuildCommands":[
+		"cmake -B build -S ../cpp/ -DCMAKE_BUILD_TYPE=RelMinSize",
+		"cmake --build build --config release --parallel"
 	],
-	"sourceFiles-osx": [
-		"../../zig-out/lib/libbindgen.a"
-	],
-	"sourceFiles-windows": [
-		"../../zig-out/lib/bindgen.lib"
-	]
+	"lflags": ["-Lbuild", "-Lbuild/Release"],
+	"libs": ["cats"],
+	"libs-linux": ["stdc++"],
+	"libs-osx": ["c++"],
+	"libs-windows": ["msvcrt"]
 }

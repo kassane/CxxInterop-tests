@@ -4,3 +4,4 @@ members = [
     "cxx/rust",
     "bindgen/rust",
 ]
+resolver = "2"

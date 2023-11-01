@@ -1,6 +1,6 @@
 #include "cats.hpp"
 
-cat::cat(const char *name) : name_(name), is_hungry(true) {}
+cat::cat(const char *name) : name_(name), is_hungry(true) { std::cout << "[C++] library says\n"; }
 
 const char *cat::name() const { return name_; }
 

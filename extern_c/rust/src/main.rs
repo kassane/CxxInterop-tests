@@ -15,6 +15,7 @@ extern "C" {
 }
 
 fn main() {
+    println!("Rust language - Extern C");
     let marshmallow_name = CString::new("Marshmallow").unwrap();
 
     unsafe {

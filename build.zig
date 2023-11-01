@@ -33,6 +33,10 @@ fn buildExe(b: *std.Build, properties: BuildInfo) void {
         .target = properties.target,
         .optimize = properties.optimize,
     });
+    switch (properties.optimize) {
+        .ReleaseSafe, .Debug => libcats.bundle_compiler_rt = true,
+        else => libcats.strip = true,
+    }
     if (std.mem.eql(u8, properties.filename(), "extern_c")) {
         libcats.addCSourceFile(.{ .file = .{ .path = "extern_c/cpp/cats.cpp" }, .flags = &.{} });
     } else if (std.mem.eql(u8, properties.filename(), "bindgen")) {

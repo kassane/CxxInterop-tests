@@ -1,25 +1,25 @@
 {
 	"authors": ["Matheus C. França"],
-	"description": "A minimal D application.",
-	"license": "proprietary",
-	"name": "extern_c",
+	"description": "Extern C binding",
+	"name": "cats_extern_c",
 	"targetType": "executable",
     "targetPath": "bin",
-	"dflags": [
-		"-preview=dip1000"
-	],
 	"buildTypes": {
         "release": {
-            "buildOptions": ["optimize", "inline"]
+            "buildOptions": ["releaseMode", "optimize", "inline"],
+			"dflags": ["--betterC", "-boundscheck=off"]
+        },
+		"debug": {
+            "buildOptions": ["debugMode", "debugInfo", "optimize"]
         }
     },
-	"sourceFiles-linux": [
-		"../../zig-out/lib/libextern_c.a"
+	"preBuildCommands":[
+		"cmake -B build -S ../cpp -DCMAKE_BUILD_TYPE=RelMinSize",
+		"cmake --build build --config release --parallel"
 	],
-	"sourceFiles-osx": [
-		"../../zig-out/lib/libextern_c.a"
-	],
-	"sourceFiles-windows": [
-		"../../zig-out/lib/extern_c.lib"
-	]
+	"lflags": ["-Lbuild", "-Lbuild/Release"],
+	"libs": ["cats"],
+	"libs-linux": ["stdc++"],
+	"libs-osx": ["c++"],
+	"libs-windows": ["msvcrt"]
 }

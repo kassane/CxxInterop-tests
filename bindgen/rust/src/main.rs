@@ -7,7 +7,7 @@ fn main() {
 
     unsafe {
         let mut chashu = cat::new(chashu_name.as_ptr());
-        println!("Our cat is: {:?}", CStr::from_ptr(chashu.name()));
+        println!("[Rust] Our cat is: {:?}", CStr::from_ptr(chashu.name()));
         chashu.meow();
         chashu.feed();
         chashu.meow();

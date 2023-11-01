@@ -1,0 +1,3 @@
+module Cats {
+  header "cats.hpp"
+}

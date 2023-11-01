@@ -3,6 +3,7 @@
 cat make_cat(const char *name)
 {
     cat c{name, true};
+    std::cout << "[C++] library says\n";
     return c;
 }
 
